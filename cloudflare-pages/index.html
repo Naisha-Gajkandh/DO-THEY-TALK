@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore playful spurious correlations between unrelated datasets. Correlation does not equal causation.">
+  <title>Do they Talk? - Spurious Correlations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="graph-paper" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <button class="brand" id="home-button" type="button" aria-label="Go to home">
+      <img src="./assets/logo.png" alt="" class="brand-mark">
+      <span>
+        <strong>Do they Talk?</strong>
+        <small>spurious correlations</small>
+      </span>
+    </button>
+    <nav class="header-actions" aria-label="Primary">
+      <button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+        <span class="theme-icon">☾</span>
+      </button>
+      <button class="nav-button" id="about-button" type="button">About</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home-view">
+      <div class="hero-copy">
+        <p class="eyebrow">Correlation playground</p>
+        <h1>When data lies beautifully.</h1>
+        <p class="hero-text">Pick a topic, compare unrelated signals, and watch coincidence dress itself up as evidence.</p>
+        <div class="hero-actions">
+          <button class="primary-button" id="surprise-button" type="button">Surprise Me</button>
+          <span class="live-pill">18 topic rooms</span>
+        </div>
+      </div>
+      <div class="hero-chart" aria-label="Decorative correlation chart">
+        <canvas id="hero-chart" width="560" height="360"></canvas>
+      </div>
+    </section>
+
+    <section class="quick-card" aria-label="Statistics reminder">
+      <div>
+        <strong>Feeling lucky?</strong>
+        <p>Jump straight into an absurd pairing and decide whether the chart is meaningful or just persuasive nonsense.</p>
+      </div>
+      <button class="secondary-button" id="quick-surprise-button" type="button">Random Pair</button>
+    </section>
+
+    <section class="category-section" aria-labelledby="category-title">
+      <div class="section-heading">
+        <h2 id="category-title">Explore Categories</h2>
+        <span id="category-count">18 topics</span>
+      </div>
+      <div class="category-grid" id="category-grid"></div>
+    </section>
+
+    <section class="explorer hidden" id="explorer-view" aria-live="polite">
+      <div class="explorer-header">
+        <button class="back-button" id="back-button" type="button">← Categories</button>
+        <button class="secondary-button" id="next-pair-button" type="button">New Pair</button>
+      </div>
+      <div class="explorer-layout">
+        <article class="correlation-panel">
+          <p class="eyebrow" id="explorer-category">Category</p>
+          <h2 id="pair-title">Two unrelated things</h2>
+          <p id="pair-summary">Their lines move together just enough to look suspicious.</p>
+          <div class="score-row">
+            <div>
+              <span class="score-label">Correlation score</span>
+              <strong id="score-value">0.94</strong>
+            </div>
+            <span class="warning-pill">not causation</span>
+          </div>
+        </article>
+        <article class="chart-panel">
+          <canvas id="detail-chart" width="760" height="420"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <section class="about hidden" id="about-view">
+      <button class="back-button" id="about-back-button" type="button">← Home</button>
+      <div class="about-content">
+        <p class="eyebrow">About</p>
+        <h2>Charts can be convincing without being true.</h2>
+        <p>This standalone Cloudflare Pages version keeps the spirit of the main project in plain HTML, CSS, and JavaScript. It is meant for static deployment and does not change the React/Vite app.</p>
+        <p>Use it as a lightweight public version while the full project remains available for local development.</p>
+      </div>
+    </section>
+
+    <section class="note-card">
+      <strong>Did you know?</strong>
+      <p>With enough data, you can make almost anything correlate with almost anything else. That is why correlation does not equal causation.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Do they Talk?</span>
+    <span>Static Cloudflare Pages export</span>
+  </footer>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
