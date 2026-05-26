@@ -1,0 +1,3 @@
+[submodule "spuriouscorrelations"]
+	path = spuriouscorrelations
+	url = https://github.com/pachadotdev/spuriouscorrelations.git
