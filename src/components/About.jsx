@@ -5,7 +5,7 @@ import logoImg from '../logo.png';
 
 const socialLinks = [
   { label: 'GitHub', href: 'https://github.com/Naisha-Gajkandh' },
-  { label: 'Email', href: 'mailto:naishagajkandh@gamil.com' },
+  { label: 'Email', href: 'mailto:naishagajkandh@gmail.com' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/naisha-gajkandh-28b44a312/' },
 ];
 

@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -210,3 +210,260 @@ select optgroup { background: var(--bg-primary); color: var(--text-secondary); f
 .text-muted { color: var(--text-muted); }
 .bg-accent-dim { background: var(--accent-dim); }
 .border-accent { border-color: var(--accent); }
+
+/* ══════════════════════════════════════════
+   SILVER BALLS & LANDING PAGE UTILITIES
+   ══════════════════════════════════════════ */
+
+/* Metallic chrome title */
+.landing-title {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e2e8f0 25%,
+    #94a3b8 50%,
+    #cbd5e1 75%,
+    #ffffff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shineSweep 8s linear infinite;
+  text-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .landing-title {
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #334155 25%,
+    #64748b 50%,
+    #475569 75%,
+    #0f172a 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shineSweep 8s linear infinite;
+  text-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+/* Shiny 3D Silver Ball */
+.silver-ball {
+  position: relative;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  transition: box-shadow 0.3s ease, transform 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+/* Specular shiny overlay reflection */
+.silver-ball-highlight {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 40%, transparent 80%);
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* Shiny sweep line */
+.silver-ball-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 40%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 60%, transparent 70%);
+  background-size: 300% 300%;
+  background-position: 0% 0%;
+  animation: metallicSweep 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Floating Math Symbols */
+.math-float {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  animation: mathFloatAnimation var(--float-duration, 12s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  opacity: 0;
+}
+
+@keyframes mathFloatAnimation {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--float-opacity, 0.25);
+  }
+  90% {
+    opacity: var(--float-opacity, 0.25);
+  }
+  100% {
+    transform: translate(var(--float-x, 20px), var(--float-y, -80px)) rotate(var(--float-rot, 15deg)) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes metallicSweep {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+@keyframes shineSweep {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Custom premium button */
+.explore-btn {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3), inset 0 1px 0 0 rgba(255,255,255,0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .explore-btn {
+  border: 1px solid rgba(59,108,239,0.15);
+  background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(240,244,255,0.6) 100%);
+  box-shadow: 0 8px 32px 0 rgba(59,108,239,0.06), inset 0 1px 0 0 rgba(255,255,255,0.8);
+}
+
+.explore-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px 0 var(--accent-glow), inset 0 1px 0 0 rgba(255,255,255,0.2);
+}
+
+[data-theme="light"] .explore-btn:hover {
+  box-shadow: 0 12px 30px 0 rgba(59,108,239,0.15), inset 0 1px 0 0 rgba(255,255,255,0.9);
+}
+
+.explore-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%;
+  width: 150%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.6s ease;
+}
+
+[data-theme="light"] .explore-btn::before {
+  background: linear-gradient(90deg, transparent, rgba(59,108,239,0.1), transparent);
+}
+
+.explore-btn:hover::before {
+  left: 150%;
+}
+
+/* ══════════════════════════════════════════
+   MOTIONSITES-INSPIRED EXTRA PREMIUM UTILITIES
+   ══════════════════════════════════════════ */
+
+/* Custom high-tech dashboard sidebar scrollbar */
+.sidebar-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 140, 255, 0.2) transparent;
+}
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+  transition: background 0.3s;
+}
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* Premium Card hover neon trails */
+.neon-card-blue {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+[data-theme="light"] .neon-card-blue {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(59, 108, 239, 0.08);
+}
+.neon-card-blue:hover {
+  transform: translateY(-2px) scale(1.015);
+  border-color: var(--accent);
+  background: rgba(99, 140, 255, 0.05);
+  box-shadow: 0 10px 30px -10px var(--accent-glow), inset 0 0 12px rgba(99, 140, 255, 0.08);
+}
+[data-theme="light"] .neon-card-blue:hover {
+  background: rgba(240, 244, 255, 0.9);
+  box-shadow: 0 10px 25px -10px rgba(59, 108, 239, 0.15), inset 0 0 12px rgba(59, 108, 239, 0.04);
+}
+
+.neon-card-green {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+[data-theme="light"] .neon-card-green {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 138, 160, 0.08);
+}
+.neon-card-green:hover {
+  transform: translateY(-2px) scale(1.015);
+  border-color: var(--accent2);
+  background: rgba(34, 211, 238, 0.04);
+  box-shadow: 0 10px 30px -10px rgba(34, 211, 238, 0.15), inset 0 0 12px rgba(34, 211, 238, 0.08);
+}
+[data-theme="light"] .neon-card-green:hover {
+  background: rgba(240, 253, 250, 0.9);
+  box-shadow: 0 10px 25px -10px rgba(14, 138, 160, 0.12), inset 0 0 12px rgba(14, 138, 160, 0.04);
+}
+
+/* Sharp specular studio dot highlight */
+.specular-dot-sharp {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px 2px #ffffff;
+  filter: blur(0.3px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Glossy glass reflection curve overlay on the massive spheres */
+.sphere-glass-glare {
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  right: 4%;
+  bottom: 4%;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.15) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 5;
+}
+[data-theme="light"] .sphere-glass-glare {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.08) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+
