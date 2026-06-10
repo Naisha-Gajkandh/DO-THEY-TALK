@@ -6,7 +6,36 @@
 
 Just because two trends align perfectly on a chart with a high statistical confidence score does not mean there is a real-world cause-and-effect relationship between them.
 
-Live website: **[do-they-talk.pages.dev](https://0db48ab4.do-they-talk.pages.dev/)**
+* Live website: **[do-they-talk.pages.dev](https://0db48ab4.do-they-talk.pages.dev/)**
+* Legacy worker version: **[do-they-talk.naishagajkandh.workers.dev](https://do-they-talk.naishagajkandh.workers.dev/)**
+
+---
+
+## 💡 Concept & Philosophy
+
+> *"Can mathematics prove absolutely anything if we search hard enough for patterns? Or does it prove useless things?"*
+
+In a world overflowing with numbers, trends, and statistics, unrelated things sometimes move together so perfectly that they almost feel connected. Shark attacks rise with ice cream sales. Cheese consumption mirrors bizarre accidents. Movie releases seem to predict completely unrelated events.
+
+Most of these relationships are meaningless coincidences. But some discoveries in history also began as strange observations people almost ignored. This project was created to explore that thin line between coincidence and curiosity.
+
+### The Story Behind the Logo
+* **Two Things That Should Never Meet - But Do:** The logo features two distinct shapes facing each other: one round, one angular. Different by nature, different by design, built for entirely different purposes. In any logical world, they would never be in the same room. And yet, there is a pulse between them.
+* **The Shapes Are the Data:** Every correlation on this website looks exactly like this. Ice cream sales and shark attacks. Nicolas Cage films and pool drownings. Two completely unrelated things, sitting across from each other—and somehow, impossibly, speaking on the same frequency. That light blue waveform between them is the correlation—the moment the data says something nobody asked it to.
+* **Why That Matters:** Penicillin, Velcro, and X-rays were all accidents. The history of human invention is full of people who noticed something they were not supposed to notice—two unrelated things talking—and instead of walking away, they asked why. `DO THEY TALK` exists for that exact moment of curiosity. We are not here to prove these correlations mean something. We are here to make you wonder if they do. Because wondering is where everything begins.
+
+---
+
+## 🧠 Project Purpose & Motivation
+
+This platform was developed **purely to inspire and improve Machine Learning and Data Science engineering skills**. 
+
+Built by **Naisha Gajkandh** (an aspiring Data Science & ML Engineer), this codebase serves as a high-fidelity playground to master:
+* Real-time client-side statistical modeling.
+* Time-series temporal alignment and linear interpolation.
+* Outlier detection and clamping using Median Absolute Deviation (MAD).
+* Dimensionless, scale-free data visualization (Z-score normalization).
+* High-performance client-side discovery engines (cross-category Pearson correlation search).
 
 ---
 
@@ -34,7 +63,7 @@ graph TD
 ## 📈 Step-by-Step Data Processing Flow
 
 ### 1. Dataset Collection & Registry
-The central entry point is the **Dataset Registry** (`src/data/registry.js`), which cataloges available datasets.
+The central entry point is the **Dataset Registry** (`src/data/registry.js`), which catalogues available datasets.
 * **Live Datasets**: Fetched in real time from public APIs, including:
   * **World Bank API**: Population growth, GDP, CO2 emissions, tourism, forest coverage, R&D spending.
   * **Frankfurter API**: Live currency exchange rates (EUR to USD).
@@ -76,7 +105,7 @@ This guarantees perfectly matching annual pairs for calculation. If the resultin
 ---
 
 ### 4. Z-Score Normalization
-Because we compare widely different units (e.g., *degrees Celsius* vs. * Nicolas Cage films* vs. *billion USD*), graphing them on the same axis directly is impossible. 
+Because we compare widely different units (e.g., *degrees Celsius* vs. *Nicolas Cage films* vs. *billion USD*), graphing them on the same axis directly is impossible. 
 
 The system applies **Z-Score Normalization** to transform the raw values into standard deviations from their historical mean:
 
@@ -91,7 +120,7 @@ This scales all series to a dimensionless, scale-free shape, allowing the visual
 ---
 
 ### 5. Pearson Correlation Coefficient ($r$)
-Once normalized and aligned, the core engine uses `simple-statistics` to calculate the **Pearson Correlation Coefficient ($r$)**:
+Once normalized and aligned, the core engine calculates the **Pearson Correlation Coefficient ($r$)**:
 
 $$r = \frac{\sum_{i=1}^{N} (z_{A,i} \cdot z_{B,i})}{N}$$
 
@@ -134,78 +163,105 @@ This generates highly structured, hilarious theories (e.g., *"Scientists at MIT 
 
 ```txt
 Spurious Correlations/
-├── cloudflare-pages/     # Pre-built static site deployed to Cloudflare
+├── cloudflare-pages/     # Pre-built static site copied here for deployment
 ├── dist/                 # Raw Vite build folder (ignored in git)
 ├── scripts/
-│   └── copy-build.cjs    # CommonJS script copying builds to cloudflare-pages
+│   └── copy-build.cjs    # Script copying builds to cloudflare-pages folder
 ├── src/
 │   ├── api/
-│   │   ├── services/     # World Bank, NASA, Exchange rate, and Misc API fetchers
-│   │   ├── cache.js      # Memory-based fetch cache to avoid API throttling
-│   │   └── normalizer.js # Data interpolation and filling methods
-│   ├── components/       # Premium React UI (Glassmorphism dashboard, search, charts)
-│   ├── contexts/         # Dark/Light mode theme contexts
+│   │   ├── services/     # API fetchers (World Bank, Frankfurter, NASA, etc.)
+│   │   ├── cache.js      # In-memory fetch cache to prevent throttling
+│   │   └── normalizer.js # Data interpolation helper
+│   ├── components/       # Premium React dashboard, charts, & About views
+│   ├── contexts/         # Dark/Light mode theme state management
 │   ├── data/
-│   │   ├── registry.js   # Master catalog of live/static datasets
-│   │   ├── precalculated.js # Seeded high-correlation pairs for instant loading
-│   │   └── contentFilter.js # Safety and exclusion rules for correlations
+│   │   ├── registry.js   # Dataset catalog (live & static configurations)
+│   │   ├── precalculated.js # Seeded high-correlation pairs
+│   │   └── contentFilter.js # Rules to filter spurious correlations
 │   ├── engine/
-│   │   ├── correlation.js # Data pipeline manager
+│   │   ├── correlation.js # Data processing pipeline manager
 │   │   ├── correlationModel.js # MAD clamping, alignment, Z-normalizer, and Pearson scoring
-│   │   ├── discovery.js  # Multi-threaded cross-category correlation search engine
+│   │   ├── discovery.js  # Worker-based multi-threaded correlation search
 │   │   └── explanations.js # Mock scientific explanation text generator
-│   ├── App.jsx           # Main Dashboard Shell
-│   └── main.jsx          # App Entry point
-├── wrangler.jsonc        # Cloudflare deployment settings
-├── package.json          # Dependency configurations (configured for ESM)
-└── vite.config.js        # Vite & Tailwind compilation configuration
+│   ├── App.jsx           # Root layout and view controller
+│   └── main.jsx          # Entry point
+├── wrangler.jsonc        # Cloudflare deployment configuration
+├── package.json          # Dependency and script definitions
+└── vite.config.js        # Vite & Tailwind build configuration
 ```
 
 ---
 
-## 💻 Running Locally
+## 💻 Local Configuration & Laptop Setup
+
+Follow these steps to configure and run the project locally on your laptop:
 
 ### 1. Prerequisites
-Ensure you have **Node.js (v18+)** and **npm** installed.
+Ensure you have the following installed:
+* **Node.js** (v18.0.0 or higher is highly recommended)
+* **npm** (comes bundled with Node)
 
-### 2. Setup
-Clone the repository and install all dependencies (including wrangler and the Cloudflare development plugins):
+### 2. Installation
+Clone this repository and navigate to the project directory:
 ```bash
 git clone https://github.com/Naisha-Gajkandh/DO-THEY-TALK.git
 cd DO-THEY-TALK
+```
+
+Install all dependencies (this installs development dependencies like Vite, Tailwind, and Wrangler):
+```bash
 npm install
 ```
 
 ### 3. Run Development Server
-Start Vite's local dev server:
+To launch the hot-reloading development server:
 ```bash
 npm run dev
 ```
-Open **[http://localhost:5173/](http://localhost:5173/)** in your browser.
+By default, the application will be hosted at: **`http://localhost:5173/`**
 
-### 4. Build for Production
-To compile and bundle assets into the `dist/` folder and copy them into the static `cloudflare-pages/` directory:
+### 4. Build the Project
+To compile the production assets:
 ```bash
 npm run build
 ```
+This command compiles code via Vite into the `dist/` directory and executes the `copy-build.cjs` script to copy compiled files into `cloudflare-pages/`.
 
 ---
 
-## 🌐 Deploying to Cloudflare
+## 🌐 Cloudflare Deployment Guide
 
-This repository is optimized for deployment via **Cloudflare Workers Assets / Pages**.
+This project is configured to deploy static assets using Cloudflare's high-performance assets engine.
 
-### Continuous Deployment (GitHub Integration)
-The project is configured with a `wrangler.jsonc` file in the root. When you push to the `main` branch, Cloudflare automatically pulls, runs `npm run build`, and deploys the static build output using the zero-latency assets server.
+### Prerequisites
+Make sure you have a Cloudflare account.
 
-### Manual Deployment
-You can deploy directly using wrangler:
+### Step 1: Login to Cloudflare Wrangler
+Wrangler is the official CLI for Cloudflare. Log into your account:
 ```bash
+npx wrangler login
+```
+This will open your web browser. Grant permissions to authenticate Wrangler on your laptop.
+
+### Step 2: Build & Deploy
+Once authenticated, compile the latest production assets and publish them:
+```bash
+# 1. Build project
+npm run build
+
+# 2. Deploy to Cloudflare
 npx wrangler deploy
 ```
 
+Wrangler will upload the assets folder specified in `wrangler.jsonc` (the `dist` folder) and output your live deployment URL.
+
 ---
 
-## 🛡️ License & Credits
-* Original idea inspired by **Tyler Vigen's Spurious Correlations**.
-* Developed and engineered by **Naisha Gajkandh**.
+## 👤 Developer & Connect
+* **Developer**: Naisha Gajkandh — *Aspiring Data Science & ML Engineer*
+* **GitHub**: [@Naisha-Gajkandh](https://github.com/Naisha-Gajkandh)
+* **Email**: [naishagajkandh@gmail.com](mailto:naishagajkandh@gmail.com)
+* **LinkedIn**: [Naisha Gajkandh](https://www.linkedin.com/in/naisha-gajkandh-28b44a312/)
+
+---
+*Inspired by Tyler Vigen's Spurious Correlations.*
