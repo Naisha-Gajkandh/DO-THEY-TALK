@@ -231,7 +231,7 @@ export default function About({ onBack }) {
         className="flex items-center gap-2 mb-8 text-sm font-medium transition-colors hover:text-[var(--accent)] cursor-pointer"
         style={{ color: 'var(--text-muted)' }}
       >
-        <Icon name="arrow-left" size={16} />
+        <Icon name="arrowLeft" size={16} />
         Back
       </button>
 

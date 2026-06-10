@@ -1,67 +1,83 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function CorrelationScore({ result, explanation, headline }) {
+export default function CorrelationScore({ result, story, datasetA, datasetB }) {
   if (!result || !result.valid) return null;
 
+  const confidence = Math.round((result.confidence || 0) * 100);
+
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }} className="card p-8 mb-5 text-center relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-[3px] rounded-b"
-        style={{ background: 'linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent)' }} />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="score-panel"
+    >
+      <div className="score-panel__beam" />
 
-      <div className="font-mono text-[10px] uppercase tracking-[0.2em] mb-2" style={{ color: 'var(--text-muted)' }}>
-        Pearson Correlation Coefficient
+      <div className="score-panel__meta">
+        <span>Pearson correlation coefficient</span>
+        <span>{result.dataPoints} aligned years</span>
+        <span>{result.direction} trend</span>
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div key={result.rPercent}
-          initial={{ opacity: 0, scale: 0.5, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-black leading-none mb-1"
-          style={{
-            fontSize: 'clamp(3rem, 10vw, 5.5rem)',
-            background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}>
-          {result.rPercent}%
-        </motion.div>
-      </AnimatePresence>
+      <div className="grid grid-cols-1 xl:grid-cols-[0.72fr_0.28fr] gap-8 items-center">
+        <div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={result.rPercent}
+              initial={{ opacity: 0, scale: 0.72, filter: 'blur(16px)' }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 0.72 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="score-value"
+            >
+              {result.rPercent}%
+            </motion.div>
+          </AnimatePresence>
 
-      <motion.div key={result.label} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="font-display text-lg font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-        {result.label}
-      </motion.div>
+          <motion.h2
+            key={story?.headline || result.label}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="font-display font-black text-2xl md:text-4xl leading-tight mt-1 max-w-3xl"
+            style={{ color: 'var(--text-primary)' }}
+          >
+            {story?.headline || result.label}
+          </motion.h2>
 
-      <div className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-        <span className="font-medium" style={{ color: 'var(--accent)' }}>r = {result.r.toFixed(4)}</span>
-        {' | '}r^2 = {result.r2Percent}%
-        {' | '}{result.dataPoints} points
-        {' | '}{result.direction} trend
+          <div className="score-pair mt-5">
+            <span>{datasetA?.name}</span>
+            <strong>versus</strong>
+            <span>{datasetB?.name}</span>
+          </div>
+        </div>
+
+        <div className="score-dials">
+          {[
+            { label: 'r', value: result.r.toFixed(4) },
+            { label: 'r squared', value: `${result.r2Percent}%` },
+            { label: 'confidence', value: `${confidence}%` },
+          ].map(item => (
+            <div key={item.label} className="score-dial">
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {headline && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-          className="font-display text-sm font-medium italic mb-3 max-w-xl mx-auto"
-          style={{ color: 'var(--pink)' }}>
-          "{headline}"
-        </motion.div>
+      {story?.explanation && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.45 }}
+          className="score-note"
+        >
+          {story.explanation}
+        </motion.p>
       )}
-
-      {explanation && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-          className="text-xs max-w-lg mx-auto leading-relaxed italic pt-3 mt-3"
-          style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
-          <span style={{ color: 'var(--text-secondary)' }}>Model note:</span> {explanation}
-        </motion.div>
-      )}
-
-      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-80 h-40 rounded-full blur-3xl pointer-events-none"
-        style={{ background: 'var(--accent-dim)' }} />
     </motion.div>
   );
 }

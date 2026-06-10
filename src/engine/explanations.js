@@ -1,7 +1,9 @@
 /**
- * Fake "AI" Explanation Generator
- * Generates absurd scientific-style explanations for spurious correlations.
+ * Narrative facade.
+ * Python owns the model-generated explanation path, while this file keeps a
+ * deterministic browser fallback for offline runtime resilience.
  */
+import pythonEngine from './pythonEngine';
 
 const TEMPLATES = [
   "Experts at the {institute} suspect that {varA_action} may directly {effect} {varB_action}.",
@@ -123,4 +125,38 @@ export function generateHeadline(nameA, nameB, rPercent) {
     `${rPercent}% match: Is ${nameA} really driving ${nameB}?`,
   ];
   return pick(headlines);
+}
+
+function withTimeout(promise, timeoutMs = 3000) {
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(() => {
+      reject(new Error('Python narrative timed out'));
+    }, timeoutMs);
+
+    promise
+      .then(value => {
+        window.clearTimeout(timer);
+        resolve(value);
+      })
+      .catch(error => {
+        window.clearTimeout(timer);
+        reject(error);
+      });
+  });
+}
+
+export async function generateExplanationPayload(nameA, nameB, rPercent) {
+  try {
+    return await withTimeout(pythonEngine.generateExplanation(nameA, nameB, rPercent));
+  } catch {
+    return {
+      headline: generateHeadline(nameA, nameB, rPercent),
+      explanation: generateExplanation(nameA, nameB),
+      observations: [
+        `The cleaned annual series crosses the display threshold at ${rPercent}% correlation.`,
+        'This is a strong pattern match, not evidence that one variable caused the other.',
+        'Confidence reflects overlap and statistical strength after normalization and interpolation.',
+      ],
+    };
+  }
 }

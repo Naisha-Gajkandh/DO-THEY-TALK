@@ -9,6 +9,7 @@ import About from './components/About';
 import Footer from './components/Footer';
 import Icon from './components/Icon';
 import LandingPage from './components/LandingPage';
+import CursorGlow from './components/CursorGlow';
 
 // Premium high-fidelity cinematic glass scale-and-blur transition configuration
 const pageBlurVariants = {
@@ -49,18 +50,19 @@ export default function App() {
   return (
     <>
       <ParticleBackground />
+      <CursorGlow />
 
-      {/* Background orbs */}
+      {/* Ambient light fields */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="bg-orb absolute -top-[10%] -left-[5%] w-[500px] h-[500px]"
+        <div className="ambient-light-field absolute -top-[14%] -left-[12%] w-[620px] h-[620px]"
           style={{ background: isDark
-            ? 'radial-gradient(circle, rgba(99,140,255,0.12), transparent 70%)'
-            : 'radial-gradient(circle, rgba(59,108,239,0.06), transparent 70%)'
+            ? 'radial-gradient(circle, rgba(56,189,248,0.10), transparent 72%)'
+            : 'radial-gradient(circle, rgba(59,108,239,0.06), transparent 72%)'
           }} />
-        <div className="bg-orb absolute -bottom-[10%] -right-[5%] w-[400px] h-[400px]"
+        <div className="ambient-light-field absolute -bottom-[16%] -right-[10%] w-[540px] h-[540px]"
           style={{ background: isDark
-            ? 'radial-gradient(circle, rgba(34,211,238,0.08), transparent 70%)'
-            : 'radial-gradient(circle, rgba(14,138,160,0.04), transparent 70%)',
+            ? 'radial-gradient(circle, rgba(249,115,22,0.11), transparent 72%)'
+            : 'radial-gradient(circle, rgba(14,138,160,0.05), transparent 72%)',
             animationDelay: '-7s',
           }} />
       </div>
@@ -79,7 +81,7 @@ export default function App() {
             transition={pageTransitionConfig}
             className="relative z-10 w-full"
           >
-            <LandingPage onExplore={() => setShowLanding(false)} />
+            <LandingPage onExplore={() => setShowLanding(false)} onMethodology={handleAboutClick} />
           </motion.div>
         ) : (
           <motion.div
@@ -149,10 +151,10 @@ export default function App() {
                         </div>
                         <button onClick={() => {
                             const cats = [
-                              'google-searches', 'planets', 'stocks', 'memes',
-                              'weird', 'crime', 'death', 'baby-names', 'elections',
-                              'youtube', 'occupations', 'sports', 'weather',
-                              'environment', 'energy', 'films', 'food', 'education',
+                              'technology', 'food', 'movies', 'sports',
+                              'internet-trends', 'health', 'music',
+                              'historical-patterns', 'weird-statistics',
+                              'random-correlations',
                             ];
                             handleCategorySelect(cats[Math.floor(Math.random() * cats.length)]);
                           }}

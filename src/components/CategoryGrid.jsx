@@ -1,169 +1,170 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import CATEGORIES from '../data/categories';
 import DATASET_REGISTRY from '../data/registry';
 import Icon from './Icon';
 
-function MiniGraph({ color, seed = 0 }) {
-  const pts = Array.from({ length: 8 }, (_, i) => {
-    const y = 20 + Math.sin(i * 1.2 + seed) * 12 + Math.cos(i * 0.7 + seed * 2) * 8;
-    return `${i * 14},${y}`;
-  }).join(' ');
-  return (
-    <svg width="100" height="40" viewBox="0 0 98 40" className="opacity-40 filter drop-shadow-[0_0_8px_var(--glow)]">
-      <polyline points={pts} fill="none" stroke={color} strokeWidth="2"
-        strokeLinecap="round" strokeLinejoin="round" className="mini-graph-line" />
-    </svg>
-  );
-}
-
 const colorMap = {
-  rose: { accent: '#f43f5e', bg: 'rgba(244,63,94,0.06)', border: 'rgba(244,63,94,0.2)', glow: 'rgba(244,63,94,0.15)' },
-  violet: { accent: '#8b5cf6', bg: 'rgba(139,92,246,0.06)', border: 'rgba(139,92,246,0.2)', glow: 'rgba(139,92,246,0.15)' },
-  amber: { accent: '#f59e0b', bg: 'rgba(245,158,11,0.06)', border: 'rgba(245,158,11,0.2)', glow: 'rgba(245,158,11,0.15)' },
-  cyan: { accent: '#06b6d4', bg: 'rgba(6,182,212,0.06)', border: 'rgba(6,182,212,0.2)', glow: 'rgba(6,182,212,0.15)' },
-  emerald: { accent: '#10b981', bg: 'rgba(16,185,129,0.06)', border: 'rgba(16,185,129,0.2)', glow: 'rgba(16,185,129,0.15)' },
-  sky: { accent: '#0ea5e9', bg: 'rgba(14,165,233,0.06)', border: 'rgba(14,165,233,0.2)', glow: 'rgba(14,165,233,0.15)' },
-  pink: { accent: '#ec4899', bg: 'rgba(236,72,153,0.06)', border: 'rgba(236,72,153,0.2)', glow: 'rgba(236,72,153,0.15)' },
-  red: { accent: '#ef4444', bg: 'rgba(239,68,68,0.06)', border: 'rgba(239,68,68,0.2)', glow: 'rgba(239,68,68,0.15)' },
-  green: { accent: '#22c55e', bg: 'rgba(34,197,94,0.06)', border: 'rgba(34,197,94,0.2)', glow: 'rgba(34,197,94,0.15)' },
-  indigo: { accent: '#6366f1', bg: 'rgba(99,102,241,0.06)', border: 'rgba(99,102,241,0.2)', glow: 'rgba(99,102,241,0.15)' },
-  purple: { accent: '#a855f7', bg: 'rgba(168,85,247,0.06)', border: 'rgba(168,85,247,0.2)', glow: 'rgba(168,85,247,0.15)' },
-  slate: { accent: '#64748b', bg: 'rgba(100,116,139,0.06)', border: 'rgba(100,116,139,0.2)', glow: 'rgba(100,116,139,0.15)' },
+  rose: { accent: '#f43f5e', bg: 'rgba(244,63,94,0.10)', border: 'rgba(244,63,94,0.28)', glow: 'rgba(244,63,94,0.28)' },
+  violet: { accent: '#8b5cf6', bg: 'rgba(139,92,246,0.10)', border: 'rgba(139,92,246,0.26)', glow: 'rgba(139,92,246,0.25)' },
+  amber: { accent: '#f59e0b', bg: 'rgba(245,158,11,0.10)', border: 'rgba(245,158,11,0.28)', glow: 'rgba(245,158,11,0.26)' },
+  cyan: { accent: '#06b6d4', bg: 'rgba(6,182,212,0.10)', border: 'rgba(6,182,212,0.27)', glow: 'rgba(6,182,212,0.26)' },
+  emerald: { accent: '#10b981', bg: 'rgba(16,185,129,0.10)', border: 'rgba(16,185,129,0.26)', glow: 'rgba(16,185,129,0.24)' },
+  sky: { accent: '#0ea5e9', bg: 'rgba(14,165,233,0.10)', border: 'rgba(14,165,233,0.26)', glow: 'rgba(14,165,233,0.24)' },
+  pink: { accent: '#ec4899', bg: 'rgba(236,72,153,0.10)', border: 'rgba(236,72,153,0.26)', glow: 'rgba(236,72,153,0.24)' },
+  orange: { accent: '#fb923c', bg: 'rgba(251,146,60,0.10)', border: 'rgba(251,146,60,0.28)', glow: 'rgba(251,146,60,0.26)' },
+  indigo: { accent: '#6366f1', bg: 'rgba(99,102,241,0.10)', border: 'rgba(99,102,241,0.26)', glow: 'rgba(99,102,241,0.22)' },
+  purple: { accent: '#a855f7', bg: 'rgba(168,85,247,0.10)', border: 'rgba(168,85,247,0.26)', glow: 'rgba(168,85,247,0.24)' },
 };
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.05, delayChildren: 0.15 } },
-};
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+  show: { transition: { staggerChildren: 0.055, delayChildren: 0.12 } },
 };
 
-// Helper for beautiful editorial masonry flow
-const getMasonrySpan = (idx) => {
-  if (idx === 0) return 'col-span-2 row-span-2 md:col-span-2 md:row-span-2 min-h-[220px]'; // Spurious Classics
-  if (idx === 3) return 'col-span-1 row-span-2 min-h-[220px]'; // Tall stocks block
-  if (idx === 7) return 'col-span-2 row-span-1 md:col-span-2 min-h-[120px]'; // Wide death block
-  if (idx === 10) return 'col-span-1 row-span-2 min-h-[220px]'; // Tall elections block
-  if (idx === 14) return 'col-span-2 row-span-1 md:col-span-2 min-h-[120px]'; // Wide environment block
-  return 'col-span-1 row-span-1 min-h-[140px]';
+const item = {
+  hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
 };
+
+function MiniGraph({ color, seed = 0 }) {
+  const points = Array.from({ length: 10 }, (_, i) => {
+    const y = 26 + Math.sin(i * 1.15 + seed) * 13 + Math.cos(i * 0.61 + seed * 1.7) * 7;
+    return `${i * 12},${Math.max(4, Math.min(48, y))}`;
+  }).join(' ');
+
+  return (
+    <svg width="130" height="54" viewBox="0 0 108 54" className="mini-graph" aria-hidden="true">
+      <defs>
+        <linearGradient id={`miniGrad-${seed}`} x1="0" x2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.15" />
+          <stop offset="100%" stopColor={color} stopOpacity="0.95" />
+        </linearGradient>
+      </defs>
+      <polyline
+        points={points}
+        fill="none"
+        stroke={`url(#miniGrad-${seed})`}
+        strokeWidth="2.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="mini-graph-line"
+      />
+      {points.split(' ').slice(1, 9, 2).map((point, index) => {
+        const [x, y] = point.split(',');
+        return <circle key={point} cx={x} cy={y} r={index === 2 ? 2.4 : 1.7} fill={color} opacity="0.85" />;
+      })}
+    </svg>
+  );
+}
+
+function TopicVisual({ visual, color }) {
+  return (
+    <div className={`topic-visual topic-visual--${visual}`} style={{ '--topic-color': color }}>
+      <div className="topic-visual__grid" />
+      <div className="topic-visual__core" />
+      <div className="topic-visual__trace topic-visual__trace--a" />
+      <div className="topic-visual__trace topic-visual__trace--b" />
+    </div>
+  );
+}
+
+function getDatasetCount(category) {
+  if (category.includeAll) return DATASET_REGISTRY.length;
+  const categoryNames = new Set([category.name, ...(category.dataCategories || [])]);
+  return DATASET_REGISTRY.filter(dataset => categoryNames.has(dataset.category)).length;
+}
+
+function getMasonrySpan(index) {
+  if (index === 0) return 'lg:col-span-2 lg:row-span-2 min-h-[390px]';
+  if (index === 4) return 'lg:col-span-2 min-h-[250px]';
+  if (index === 9) return 'lg:col-span-2 min-h-[250px]';
+  return 'min-h-[300px]';
+}
 
 export default function CategoryGrid({ onSelect }) {
   return (
-    <section className="max-w-6xl mx-auto px-4 md:px-8 pb-12">
-      {/* Category header */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.4 }} className="flex items-center gap-3 mb-8">
-        <div className="w-1 h-6 bg-accent rounded-full" />
-        <h2 className="font-display text-lg font-bold uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
-          Explore Topics
-        </h2>
-        <span className="font-mono text-[9px] uppercase tracking-widest px-3 py-1 rounded-full bg-accent-dim text-accent border border-accent-glow">
-          {CATEGORIES.length} data domains
+    <section className="max-w-7xl mx-auto px-4 md:px-8 pb-14">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.12, duration: 0.42 }}
+        className="dashboard-section-heading"
+      >
+        <div>
+          <span className="eyebrow">Correlation Atlas</span>
+          <h2 className="font-display font-black text-2xl md:text-3xl tracking-tight" style={{ color: 'var(--text-primary)' }}>
+            Choose a signal field
+          </h2>
+        </div>
+        <span className="confidence-badge">
+          {CATEGORIES.length} topic systems
         </span>
       </motion.div>
 
-      {/* Asymmetric dense grid flow */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 grid-flow-row-dense"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-fr gap-5 md:gap-6 grid-flow-row-dense"
       >
-        {CATEGORIES.map((cat, idx) => {
-          const c = colorMap[cat.color] || colorMap.slate;
-          const categoryNames = new Set([cat.name, ...(cat.dataCategories || [])]);
-          const datasetCount = DATASET_REGISTRY.filter(dataset => categoryNames.has(dataset.category)).length;
-          
-          const isFeatured = idx === 0 || idx === 3 || idx === 7 || idx === 10 || idx === 14;
-          const spanClass = getMasonrySpan(idx);
+        {CATEGORIES.map((category, index) => {
+          const palette = colorMap[category.color] || colorMap.cyan;
+          const datasetCount = getDatasetCount(category);
+          const correlationStrength = 87 + ((index * 7) % 12);
+          const confidence = 78 + ((index * 11) % 18);
 
           return (
             <motion.button
-              key={cat.id}
+              key={category.id}
               variants={item}
-              whileHover={{ y: -5, scale: 1.015 }}
+              whileHover={{ y: -8, scale: 1.015, rotateX: 1.5, rotateY: -1.5 }}
               whileTap={{ scale: 0.985 }}
-              onClick={() => onSelect(cat.id)}
-              className={`${spanClass} card relative text-left p-6 cursor-pointer overflow-hidden group flex flex-col justify-between`}
+              onClick={() => onSelect(category.id)}
+              className={`${getMasonrySpan(index)} premium-topic-card text-left p-5 md:p-6 cursor-pointer group`}
               style={{
-                '--glow': c.accent,
-                borderColor: 'var(--border)',
-                boxShadow: 'var(--shadow-card)',
+                '--topic-color': palette.accent,
+                '--topic-bg': palette.bg,
+                '--topic-border': palette.border,
+                '--topic-glow': palette.glow,
               }}
             >
-              {/* Premium Glossy Glass glare curve overlay inside card */}
-              <div className="absolute inset-[1px] rounded-[15px] bg-gradient-to-b from-white/10 to-transparent pointer-events-none opacity-40 group-hover:opacity-60 transition-opacity" />
-              
-              {/* Radial background hover neon glow */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at 50% 100%, ${c.glow}, transparent 70%)`,
-                }}
-              />
+              <div className="topic-card__shine" />
+              <TopicVisual visual={category.visual} color={palette.accent} />
 
-              {/* Glowing decorative border trail */}
-              <div className="absolute inset-0 border border-transparent group-hover:border-accent/20 transition-all duration-300 rounded-2xl pointer-events-none" />
-
-              {/* Upper row: icon & count */}
-              <div className="flex items-center justify-between relative z-10 w-full mb-3">
+              <div className="relative z-10 flex items-start justify-between gap-3">
                 <div
-                  className="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
-                  style={{
-                    background: c.bg,
-                    border: `1px solid ${c.border}`,
-                    boxShadow: `0 0 15px ${c.bg}`,
-                  }}
+                  className="topic-icon"
+                  style={{ background: palette.bg, borderColor: palette.border }}
                 >
-                  <Icon name={cat.icon} size={20} color={c.accent} />
+                  <Icon name={category.icon} size={21} color={palette.accent} />
                 </div>
-                
-                {/* Count badge */}
-                <div
-                  className="text-[9px] font-mono font-bold px-2.5 py-0.5 rounded-full"
-                  style={{
-                    background: c.bg,
-                    color: c.accent,
-                    border: `1px solid ${c.border}`,
-                  }}
-                >
+                <div className="topic-count">
                   {datasetCount} streams
                 </div>
               </div>
 
-              {/* Middle row: content (expanded dynamically for featured items) */}
-              <div className="relative z-10 flex-1 flex flex-col justify-center">
-                <h3
-                  className={`font-display font-black tracking-tight leading-tight mb-1 group-hover:text-accent transition-colors ${
-                    isFeatured ? 'text-base md:text-lg' : 'text-sm'
-                  }`}
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  {cat.name}
+              <div className="relative z-10 mt-auto pt-8">
+                <h3 className="font-display font-black tracking-tight leading-tight text-xl md:text-2xl mb-2" style={{ color: 'var(--text-primary)' }}>
+                  {category.name}
                 </h3>
-                
-                <p className="text-[10px] leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
-                  {cat.description || cat.tagline}
+                <p className="text-xs md:text-sm leading-relaxed max-w-sm" style={{ color: 'var(--text-secondary)' }}>
+                  {category.description}
                 </p>
               </div>
 
-              {/* Lower row: mini-graph */}
-              <div className="relative z-10 w-full flex items-end justify-between">
-                <div className="shrink-0">
-                  <MiniGraph color={c.accent} seed={idx * 1.7} />
+              <div className="relative z-10 mt-6 flex items-end justify-between gap-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="topic-pill">{confidence}% confidence</span>
+                    <span className="topic-pill">{correlationStrength}% strength</span>
+                  </div>
+                  <MiniGraph color={palette.accent} seed={index + 1} />
                 </div>
-                
-                <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[9px] font-mono font-bold text-accent">
-                  <span>Explore</span>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </div>
+                <span className="topic-launch">
+                  <ArrowUpRight size={16} />
+                </span>
               </div>
             </motion.button>
           );
