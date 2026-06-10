@@ -1,4 +1,4 @@
-# Do They Talk? 📊🧠
+# Do They Talk? 
 
 **Do They Talk?** is a high-fidelity, premium interactive web application that exposes the humorous, baffling, and mathematically inevitable nature of **spurious correlations**. Built to explore time-series datasets from entirely unrelated domains, the application demonstrates a crucial statistical truth in a playful and engaging way:
 
@@ -6,8 +6,7 @@
 
 Just because two trends align perfectly on a chart with a high statistical confidence score does not mean there is a real-world cause-and-effect relationship between them.
 
-* Live website: **[do-they-talk.pages.dev](https://0db48ab4.do-they-talk.pages.dev/)**
-* Legacy worker version: **[do-they-talk.naishagajkandh.workers.dev](https://do-they-talk.naishagajkandh.workers.dev/)**
+* Live Website: **[do-they-talk.naishagajkandh.workers.dev](https://do-they-talk.naishagajkandh.workers.dev/)**
 
 ---
 
@@ -26,7 +25,7 @@ Most of these relationships are meaningless coincidences. But some discoveries i
 
 ---
 
-## 🧠 Project Purpose & Motivation
+##  Project Purpose & Motivation
 
 This platform was developed **purely to inspire and improve Machine Learning and Data Science engineering skills**. 
 
@@ -60,7 +59,7 @@ graph TD
 
 ---
 
-## 📈 Step-by-Step Data Processing Flow
+##  Step-by-Step Data Processing Flow
 
 ### 1. Dataset Collection & Registry
 The central entry point is the **Dataset Registry** (`src/data/registry.js`), which catalogues available datasets.
@@ -159,7 +158,7 @@ This generates highly structured, hilarious theories (e.g., *"Scientists at MIT 
 
 ---
 
-## 🛠️ Project Structure
+## Project Structure
 
 ```txt
 Spurious Correlations/
@@ -192,7 +191,7 @@ Spurious Correlations/
 
 ---
 
-## 💻 Local Configuration & Laptop Setup
+##  Local Configuration & Laptop Setup
 
 Follow these steps to configure and run the project locally on your laptop:
 
@@ -225,35 +224,6 @@ To compile the production assets:
 ```bash
 npm run build
 ```
-This command compiles code via Vite into the `dist/` directory and executes the `copy-build.cjs` script to copy compiled files into `cloudflare-pages/`.
-
----
-
-## 🌐 Cloudflare Deployment Guide
-
-This project is configured to deploy static assets using Cloudflare's high-performance assets engine.
-
-### Prerequisites
-Make sure you have a Cloudflare account.
-
-### Step 1: Login to Cloudflare Wrangler
-Wrangler is the official CLI for Cloudflare. Log into your account:
-```bash
-npx wrangler login
-```
-This will open your web browser. Grant permissions to authenticate Wrangler on your laptop.
-
-### Step 2: Build & Deploy
-Once authenticated, compile the latest production assets and publish them:
-```bash
-# 1. Build project
-npm run build
-
-# 2. Deploy to Cloudflare
-npx wrangler deploy
-```
-
-Wrangler will upload the assets folder specified in `wrangler.jsonc` (the `dist` folder) and output your live deployment URL.
 
 ---
 
